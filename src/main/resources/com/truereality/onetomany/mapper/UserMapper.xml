@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.truereality.onetomany.mapper.UserMapper">
+
+    <resultMap id="UserWithOrdersResultMap" type="com.truereality.onetomany.User">
+        <id property="id" column="id"/>
+        <result property="userName" column="userName"/>
+        <result property="userAge" column="userAge"/>
+        <result property="userAddress" column="userAddress"/>
+        <collection property="orderList" ofType="com.truereality.onetomany.Order">
+            <id property="id" column="id"/>
+            <result property="number" column="number"/>
+        </collection>
+    </resultMap>
+
+    <select id="findUserWithOrders" resultMap="UserWithOrdersResultMap">
+        SELECT u.*, o.id as orders_id, o.number
+        from tb_users u,
+             tb_orders o
+        WHERE u.id = o.user_id
+          and u.id = #{id}
+    </select>
+
+    <select id="findUserWithOrders2" parameterType="Integer"
+            resultMap="UserWithOrdersResult2">
+        SELECT *
+        from tb_users
+        WHERE id = #{id}
+    </select>
+
+    <resultMap type="com.truereality.onetomany.User" id="UserWithOrdersResult2">
+        <id property="id" column="id"/>
+        <result property="userName" column="userName"/>
+        <result property="userAge" column="userAge"/>
+        <result property="userAddress" column="userAddress"/>
+        <collection property="orderList" column="id"
+                    ofType="com.truereality.onetomany.Order"
+                    select="com.truereality.onetomany.mapper.OrderMapper.findOrdersByUserId">
+        </collection>
+    </resultMap>
+
+</mapper>
