@@ -24,7 +24,12 @@
 
     <mappers>
         <!--扫描mapper-->
-        <package name="com.truereality.mapper"/>
-        <package name="com.truereality.onetomany.mapper"/>
+<!--        <package name="com.truereality.mapper"/>-->
+<!--        <package name="com.truereality.onetomany.mapper"/>-->
+
+        <mapper resource="com/truereality//mapper/UserMapper.xml"/>
+        <mapper resource="com/truereality/onetomany/mapper/OrderMapper.xml"/>
+        <mapper resource="com/truereality/onetomany/mapper/UserMapper.xml"/>
+
     </mappers>
 </configuration>
